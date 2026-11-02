@@ -1,0 +1,33 @@
+appId: com.xiaoyangc.scrcpywebcast
+productName: Scrcpy WebCast
+copyright: Copyright © 2026 xiaoyangc-ch
+
+directories:
+  output: release
+  buildResources: build
+
+# 只打构建产物：源码不塞进 asar
+files:
+  - dist/**/*
+  - package.json
+
+# 运行时要用的二进制：adb + scrcpy-server
+# 打包后位于 process.resourcesPath，resolveResources() 直接按名字取
+extraResources:
+  - from: resources
+    to: .
+    filter:
+      - '**/*'
+
+win:
+  target:
+    - target: portable
+      arch:
+        - x64
+  artifactName: scrcpy-webcast-${version}-win-x64.${ext}
+
+portable:
+  artifactName: scrcpy-webcast-${version}-win-x64.${ext}
+
+# 不自动发布，Release 手动建
+publish: null

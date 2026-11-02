@@ -20,6 +20,13 @@ Electron 内嵌 Android 投屏：**不打包 scrcpy.exe，也不弹外部窗口*
 - 断线可重连；关闭窗口时同步收掉设备端 server、forward 与残留进程
 - 同一设备的启停串行化，避免两次点击互删对方的 forward
 
+## 开箱即用
+
+不想构建的话，直接下载 [Releases](https://github.com/xiaoyangc-ch/scrcpy-webcast/releases) 里的
+`scrcpy-webcast-<版本>-win-x64.exe`（便携版，双击即用，不需要安装；含 adb 与 scrcpy-server）。
+
+> 未做代码签名，首次运行 Windows 可能弹 SmartScreen，选「更多信息 → 仍要运行」。
+
 ## 环境要求
 
 - Node.js 20+（构建用）；本仓库用 Electron 30（Chromium 124，自带 WebCodecs）
@@ -38,6 +45,20 @@ npm start
 
 ```bash
 npm run dev
+```
+
+打包 Windows 便携版（输出到 `release/`）：
+
+```bash
+npm run dist
+```
+
+国内网络建议加上镜像，`electron-builder` 会去 GitHub 拉 electron / nsis 二进制：
+
+```bash
+export ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/"
+export ELECTRON_BUILDER_BINARIES_MIRROR="https://npmmirror.com/mirrors/electron-builder-binaries/"
+npm run dist
 ```
 
 冒烟截图（启动应用、用 CDP 截当前页面，顺带收集 console 报错）：
