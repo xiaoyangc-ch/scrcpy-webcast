@@ -1,5 +1,6 @@
 import { app, clipboard } from 'electron'
 import { getInputMethod, listDevices, rebootDevice } from './adb'
+import { scanLan } from './lanScan'
 import { handleEvent } from 'share/main/lib/util'
 import * as webCast from './webCast'
 import * as webCastWindow from './windows/webcast'
@@ -17,6 +18,7 @@ if (!gotLock) {
 
     // 设备列表给首页用
     handleEvent('getDevices', listDevices)
+    handleEvent('scanLanDevices', scanLan)
     handleEvent('getInputMethod', getInputMethod)
     handleEvent('rebootDevice', rebootDevice)
     // 投屏工具栏的 Ctrl+V：渲染层 navigator.clipboard 在失焦时会慢或返回空

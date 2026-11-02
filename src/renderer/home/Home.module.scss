@@ -27,7 +27,7 @@
 }
 
 .refresh {
-  margin-left: auto;
+  margin-left: 8px;
   height: 26px;
   padding: 0 12px;
   font-size: 12px;
@@ -46,6 +46,39 @@
     color: #bbb;
     cursor: default;
   }
+}
+
+.scan {
+  margin-left: auto;
+  height: 26px;
+  padding: 0 12px;
+  font-size: 12px;
+  color: #4fb155;
+  background: #fff;
+  border: 1px solid #4fb155;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: #f2f9f2;
+  }
+
+  &:disabled {
+    color: #aaa;
+    border-color: #e5e5e5;
+    background: #fff;
+    cursor: default;
+  }
+}
+
+.banner {
+  margin: 12px 16px 0;
+  padding: 7px 10px;
+  font-size: 12px;
+  color: #3d6b41;
+  background: #f2f9f2;
+  border: 1px solid #cfe6d1;
+  border-radius: 4px;
 }
 
 .error {

@@ -14,35 +14,66 @@ export default function App() {
   const [devices, setDevices] = useState<IDevice[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [scanning, setScanning] = useState(false)
+  const [scanInfo, setScanInfo] = useState('')
 
-  const refresh = useCallback(async () => {
-    setLoading(true)
+  const load = useCallback(async () => {
     try {
       setDevices(await main.getDevices())
       setError('')
     } catch (e: any) {
       setDevices([])
       setError(e && e.message ? e.message : String(e))
-    } finally {
-      setLoading(false)
     }
   }, [])
 
+  // 手动刷新才走 loading：定时轮询如果也置 loading，「刷新」按钮会一直闪
+  const refresh = useCallback(async () => {
+    setLoading(true)
+    try {
+      await load()
+    } finally {
+      setLoading(false)
+    }
+  }, [load])
+
   useEffect(() => {
     refresh()
-    const timer = setInterval(refresh, 5000)
+    const timer = setInterval(load, 5000)
     return () => clearInterval(timer)
-  }, [refresh])
+  }, [refresh, load])
+
+  const scan = useCallback(async () => {
+    setScanning(true)
+    setScanInfo('正在扫描本机网段的 5555 端口…')
+    try {
+      const r = await main.scanLanDevices()
+      const connected = r.found.filter((f) => f.connected).length
+      setScanInfo(
+        `扫描 ${r.scanned} 个地址，${r.found.length} 台开着调试端口，已连接 ${connected} 台`
+      )
+      await load()
+    } catch (e: any) {
+      setScanInfo(`扫描失败：${e && e.message ? e.message : e}`)
+    } finally {
+      setScanning(false)
+    }
+  }, [load])
 
   return (
     <div className={Style.container}>
       <div className={Style.header}>
         <div className={Style.title}>设备</div>
         <div className={Style.count}>{devices.length} 台</div>
+        <button className={Style.scan} onClick={scan} disabled={scanning}>
+          {scanning ? '扫描中…' : '扫描局域网'}
+        </button>
         <button className={Style.refresh} onClick={refresh} disabled={loading}>
-          {loading ? '扫描中…' : '刷新'}
+          {loading ? '刷新中…' : '刷新'}
         </button>
       </div>
+
+      {scanInfo ? <div className={Style.banner}>{scanInfo}</div> : null}
 
       {error ? <div className={Style.error}>{error}</div> : null}
 

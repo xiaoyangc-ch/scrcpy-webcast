@@ -13,6 +13,7 @@ import {
   IpcRecordingStop,
   IpcResizeWebCast,
   IpcReverseWebCast,
+  IpcScanLanDevices,
   IpcSetStore,
   IpcShowWebCast,
   IpcStartWebCast,
@@ -41,6 +42,7 @@ const mainObj = {
   getInputMethod: invoke<IpcGetInputMethod>('getInputMethod'),
   readClipboard: invoke<IpcReadClipboard>('readClipboard'),
   rebootDevice: invoke<IpcRebootDevice>('rebootDevice'),
+  scanLanDevices: invoke<IpcScanLanDevices>('scanLanDevices'),
   writeClipboard: (text: string) => ipcRenderer.invoke('writeClipboard', text),
 }
 

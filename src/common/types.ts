@@ -67,3 +67,8 @@ export type IpcSetStore = (name: string, val: any) => Promise<void>
 export type IpcGetInputMethod = (deviceId: string) => Promise<string>
 export type IpcReadClipboard = () => Promise<string>
 export type IpcRebootDevice = (deviceId: string) => Promise<void>
+
+export type IpcScanLanDevices = () => Promise<{
+  scanned: number
+  found: { id: string; connected: boolean }[]
+}>
