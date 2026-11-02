@@ -1,0 +1,226 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #000;
+  color: #ddd;
+  overflow: hidden;
+}
+
+.toolbar {
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  /* 跟随 LunaToolbar 自身 31px：38px 会在按钮上下各留 4px 空白，显得工具栏很“厚” */
+  height: 31px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background: #f7f7f7;
+  border-bottom: 1px solid #d9d9d9;
+  white-space: nowrap;
+
+  /* 窗口拖窄时按钮保持原尺寸，宁可横向滚动也不挤压 */
+  :global(.luna-toolbar-item),
+  :global(.luna-toolbar-button),
+  :global(.luna-toolbar-icon) {
+    flex-shrink: 0;
+  }
+
+  /* 只在最小窗口附近收紧间距（默认左右各 4px 保持松快），
+     否则 19 个按钮会把最右边的「全屏/设置」挤出可视区 */
+  @media (max-width: 620px) {
+    :global(.luna-toolbar-item) {
+      margin: 0 2px;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    height: 0;
+  }
+}
+
+.screen {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  background: #000;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  outline: none;
+}
+
+.loading {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.errorBox {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  max-width: 90%;
+  padding: 14px 18px;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+  background: rgba(40, 40, 40, 0.95);
+  border: 1px solid #444;
+}
+
+.errorText {
+  color: #ffb4b4;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.retry {
+  height: 26px;
+  padding: 0 14px;
+  border: 1px solid #3d5afe;
+  border-radius: 4px;
+  background: #3d5afe;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.mask {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.dialog {
+  width: 320px;
+  padding: 16px;
+  border-radius: 8px;
+  background: #f7f7f7;
+  color: #333;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+.dialogTitle {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #555;
+
+  select {
+    width: 150px;
+    height: 26px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    background: #fff;
+    color: #333;
+    font-size: 12px;
+  }
+}
+
+.fieldHint {
+  /* 与下拉框右对齐，单独一行：放进 label 的 flex 行里会把「编码」挤成两行并溢出弹窗 */
+  width: 150px;
+  margin: -4px 0 10px auto;
+  color: #999;
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.dialogBtns .reboot {
+  margin-right: auto;
+  color: #d33;
+}
+
+.dialogBtns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+
+  button {
+    height: 26px;
+    padding: 0 14px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    background: #fff;
+    color: #555;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .primary {
+    border-color: #3d5afe;
+    background: #3d5afe;
+    color: #fff;
+  }
+}
+
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  padding: 6px 12px;
+  transform: translateX(-50%);
+  border-radius: 6px;
+  background: rgba(40, 40, 40, 0.92);
+  color: #eee;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.displayItem {
+  display: block;
+  width: 100%;
+  margin-bottom: 6px;
+  padding: 6px 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    border-color: #3d5afe;
+    color: #3d5afe;
+  }
+
+  /* 当前正在使用的信号源：锁定，不可再点（点了也是重启同一条会话） */
+  &:disabled {
+    border-color: #e6e6e6;
+    background: #f2f2f2;
+    color: #999;
+    cursor: default;
+  }
+}
+
+.hint {
+  margin-bottom: 10px;
+  color: #999;
+  font-size: 11px;
+  line-height: 1.5;
+}

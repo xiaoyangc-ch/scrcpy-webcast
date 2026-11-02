@@ -1,0 +1,42 @@
+Scrcpy WebCast
+Copyright (C) 2026 Scrcpy WebCast contributors
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License along
+with this program. If not, see <https://www.gnu.org/licenses/>.
+
+---------------------------------------------------------------------------
+第三方组件 / Third-party components
+---------------------------------------------------------------------------
+
+1) AYA (https://github.com/liriliri/aya)
+   License: AGPL-3.0
+   本项目的投屏模块（src/main/webCast.ts、src/renderer/webcast/、工具栏组件与
+   图标字体）改编自 AYA 的投屏实现，按 AGPL-3.0 同样发布。
+   The screencast module here is derived from AYA's implementation and is
+   distributed under the same AGPL-3.0 terms.
+
+2) scrcpy (https://github.com/Genymobile/scrcpy)
+   License: Apache-2.0
+   resources/scrcpy.jar 是 scrcpy 官方 server（3.1）构建产物，
+   通过 `app_process` 在设备端运行，本项目未修改其源码。
+
+3) @yume-chan/scrcpy / @yume-chan/scrcpy-decoder-webcodecs / @yume-chan/stream-extra
+   License: MIT
+   纯 TypeScript 的 scrcpy 客户端与 WebCodecs 解码器。
+
+4) Android SDK Platform-Tools (adb)
+   License: Apache-2.0
+   resources/adb/ 下的 adb.exe 与两个 DLL 来自 Android SDK platform-tools。
+
+5) licia / luna-toolbar / luna-modal
+   License: MIT
+   作者 liriliri，与本项目同为 Electron 桌面端常用依赖。
